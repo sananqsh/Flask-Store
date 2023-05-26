@@ -26,9 +26,13 @@ class Item(Resource):
         item = {'name': name, 'price': data['price']}
         items.append(item)
         return item, 201
-    
+
+class ItemList(Resource):
+    def get(self):
+        return {'items': items}
 
 api.add_resource(Item, '/item/<string:name>')
+api.add_resource(ItemList, '/items')
 
 app.config['PROPAGATE_EXCEPTIONS'] = True
 
