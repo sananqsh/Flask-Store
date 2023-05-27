@@ -18,4 +18,5 @@ api.add_resource(UserRegister, '/register')
 
 app.config['PROPAGATE_EXCEPTIONS'] = True
 
-app.run()
+if __name__ == "__main__":
+    app.run(port=5000, debug=True)
