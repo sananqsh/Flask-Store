@@ -38,8 +38,8 @@ class ItemModel:
         connection = sqlite3.connect('data.db')
         cursor = connection.cursor()
 
-        insert_query = "UPDATE items SET name=?, price=? WHERE name=?"
-        cursor.execute(insert_query, (item['name'], item['price'], item['name']))
+        insert_query = "UPDATE items SET price=? WHERE name=?"
+        cursor.execute(insert_query, (item['price'], item['name']))
         
         connection.commit()
         connection.close()
