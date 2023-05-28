@@ -29,7 +29,10 @@ class Item(Resource):
         data = Item.parser.parse_args()
         item = ItemModel(name, data['price'])
 
-        item.insert()
+        try:
+            item.save_to_db()
+        except:
+            return {'message': 'An error occurred inserting the item'}, 500
 
         return item.json(), 201
     
@@ -37,41 +40,30 @@ class Item(Resource):
     def delete(self, name):
         item = ItemModel.find_by_name(name)
         if item:
-            delete_query = "DELETE FROM items WHERE name=?"
-            
-            connection = sqlite3.connect('data.db')
-            cursor = connection.cursor()
-            cursor.execute(delete_query, (name,))
-            
-            connection.commit()
-            connection.close()
-            
+            item.delete_from_db()
             return {'message': 'Item deleted'}
 
         return {'message': 'Item does not exist'}, 404
     
     @jwt_required()
     def put(self, name):
-        item = ItemModel.find_by_name(name)
-        
+        item = ItemModel.find_by_name(name)        
         data = Item.parser.parse_args()
-        updated_item = ItemModel(name, data['price'])
 
         status_code = 200
         if item:
-            try:
-                updated_item.update()
-            except:
-                return {'message': 'An error occurred updating the item'}, 500
+            item.price = data['price']
         else:
-            try:
-                updated_item.insert()
-            except:
-                return {'message': 'An error occurred inserting the item'}, 500
-        
+            item = ItemModel(name, data['price'])
             status_code = 201
         
-        return updated_item.json(), status_code
+        try:
+            item.save_to_db()
+        except:
+            return {'message': 'An error occurred inserting the item'}, 500
+    
+        
+        return item.json(), status_code
 
 class ItemList(Resource):
     def get(self):
