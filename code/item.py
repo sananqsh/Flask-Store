@@ -33,14 +33,12 @@ class Item(Resource):
           return {'item': {'name': item[0], 'price': item[1]}}
         
     @classmethod
-    def insert(self, name, price):
+    def insert(cls, item):
         connection = sqlite3.connect('data.db')
         cursor = connection.cursor()
-
-        item = {'name': name, 'price': price}
         
         insert_query = "INSERT INTO items VALUES (?, ?)"
-        cursor.execute(insert_query, (name, price))
+        cursor.execute(insert_query, (item['name'], item['price']))
         
         connection.commit()
         connection.close()
@@ -48,14 +46,12 @@ class Item(Resource):
         return item
     
     @classmethod
-    def update(self, name, price):
+    def update(cls, item):
         connection = sqlite3.connect('data.db')
         cursor = connection.cursor()
 
-        item = {'name': name, 'price': price}
-        
         insert_query = "UPDATE items SET name=?, price=? WHERE name=?"
-        cursor.execute(insert_query, (name, price, name))
+        cursor.execute(insert_query, (item['name'], item['price'], item['name']))
         
         connection.commit()
         connection.close()
@@ -69,7 +65,9 @@ class Item(Resource):
             return {'message': "An item with name '{}' already exists".format(name)}, 400
             
         data = Item.parser.parse_args()
-        item = self.insert(name, data['price'])
+        item = {'name': name, 'price': data['price']}
+
+        item = self.insert(item)
 
         return item, 201
     
@@ -93,13 +91,24 @@ class Item(Resource):
     @jwt_required()
     def put(self, name):
         item = self.find_by_name(name)
+        
         data = Item.parser.parse_args()
+        updated_item = {'name': name, 'price': data['price']}
+
         if item:
-            item = self.update(name, data['price'])
-            return item, 200
+            try:
+                self.update(updated_item)
+            except:
+                return {'message': 'An error occurred updating the item'}, 500
+        
+            return updated_item, 200
         else:
-            item = self.insert(name, data['price'])
-            return item, 201
+            try:
+                self.insert(updated_item)
+            except:
+                return {'message': 'An error occurred inserting the item'}, 500
+        
+            return updated_item, 201
 
 class ItemList(Resource):
     def get(self):
