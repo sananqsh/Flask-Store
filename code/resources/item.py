@@ -16,7 +16,7 @@ class Item(Resource):
         item = ItemModel.find_by_name(name)
 
         if item:
-          return item
+          return item.json()
         
         return {'message': 'Item not found'}, 404
     
@@ -27,11 +27,11 @@ class Item(Resource):
             return {'message': "An item with name '{}' already exists".format(name)}, 400
             
         data = Item.parser.parse_args()
-        item = {'name': name, 'price': data['price']}
+        item = ItemModel(name, data['price'])
 
-        ItemModel.insert(item)
+        item.insert()
 
-        return item, 201
+        return item.json(), 201
     
     @jwt_required()
     def delete(self, name):
@@ -55,22 +55,23 @@ class Item(Resource):
         item = ItemModel.find_by_name(name)
         
         data = Item.parser.parse_args()
-        updated_item = {'name': name, 'price': data['price']}
+        updated_item = ItemModel(name, data['price'])
 
+        status_code = 200
         if item:
             try:
-                ItemModel.update(updated_item)
+                updated_item.update()
             except:
                 return {'message': 'An error occurred updating the item'}, 500
-        
-            return updated_item, 200
         else:
             try:
-                ItemModel.insert(updated_item)
+                updated_item.insert()
             except:
                 return {'message': 'An error occurred inserting the item'}, 500
         
-            return updated_item, 201
+            status_code = 201
+        
+        return updated_item.json(), status_code
 
 class ItemList(Resource):
     def get(self):

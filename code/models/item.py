@@ -9,7 +9,7 @@ class ItemModel:
         return {'name': self.name, 'price': self.price}   
 
     @classmethod
-    def find_by_name(self, name):
+    def find_by_name(cls, name):
         connection = sqlite3.connect('data.db')
         cursor = connection.cursor()
 
@@ -20,26 +20,24 @@ class ItemModel:
         connection.close()
 
         if item:
-          return {'item': {'name': item[0], 'price': item[1]}}
+          return cls(*item)
         
-    @classmethod
-    def insert(cls, item):
+    def insert(self):
         connection = sqlite3.connect('data.db')
         cursor = connection.cursor()
         
         insert_query = "INSERT INTO items VALUES (?, ?)"
-        cursor.execute(insert_query, (item['name'], item['price']))
+        cursor.execute(insert_query, (self.name, self.price))
         
         connection.commit()
         connection.close()
     
-    @classmethod
-    def update(cls, item):
+    def update(self):
         connection = sqlite3.connect('data.db')
         cursor = connection.cursor()
 
         insert_query = "UPDATE items SET price=? WHERE name=?"
-        cursor.execute(insert_query, (item['price'], item['name']))
+        cursor.execute(insert_query, (self.price, self.name))
         
         connection.commit()
         connection.close()
