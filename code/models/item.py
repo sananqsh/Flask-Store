@@ -32,8 +32,6 @@ class ItemModel:
         
         connection.commit()
         connection.close()
-
-        return item
     
     @classmethod
     def update(cls, item):
@@ -45,5 +43,3 @@ class ItemModel:
         
         connection.commit()
         connection.close()
-
-        return item
