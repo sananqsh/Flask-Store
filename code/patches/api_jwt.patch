@@ -1,5 +1,5 @@
---- ../venv/lib/python3.10/site-packages/jwt/api_jwt.py	2023-01-01 00:00:00.000000000 +0000
-+++ patches/api_jwt.py	2023-01-01 00:00:00.000000000 +0000
+--- /usr/local/lib/python3.5/site-packages/jwt/api_jwt.py	2023-06-04 2023-01-01 00:00:00.000000000 +0000
++++ ./patches/api_jwt.patch	2023-06-04 2023-01-01 00:00:00.000000000 +0000
 @@ -2,7 +2,7 @@
  import warnings
  
