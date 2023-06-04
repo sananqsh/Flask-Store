@@ -50,18 +50,14 @@ Only APIs with methods other than `GET` require these tokens.
 > ```  
 > It's because of the incompability of your python with the libraries; the same problem that I encountered.
 > This is fixable by using the patch files I wrote.
-> 1. Go to your project path:
->   ```
->     cd /path/to/Flask-Store/
->   ```
-> 2. Look at the patch files, I wrote them for my python version: 3.10. If you have a different python version, modify the file.
-> 3. Patch!
+> 1. Take a look at the patch files, I wrote them for my python version: 3.10. If you have a different python version, modify the file.
+> 2. In the `code/` directory, run patch:
 >   ```
 >     patch ../venv/lib/python3.10/site-packages/jwt/api_jwt.py < patches/api_jwt.patch
 >   ```
 >   ```
 >     patch ../venv/lib/python3.10/site-packages/jwt/api_jws.py < patches/api_jws.patch
 >   ```
-> The app should work fine now. If any other error came along, I'd be happy to know!
+> The app should work fine now. If any other error came along, let me know!
 >
 > Also, I tried to dockerize the project but after running its image, I had trouble calling the APIs! Checkout to `dockerize` branch and see if you can help with the issue.
