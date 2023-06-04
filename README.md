@@ -9,30 +9,30 @@ Only APIs with methods other than `GET` require these tokens.
 - Open your terminal
 - Clone the project by:
   ```
-    $ git clone https://github.com/sananqsh/Flask-Store.git
+    git clone https://github.com/sananqsh/Flask-Store.git
   ```
 - Change directory to the project:
   ```
-    $ cd Flask-Store/
+    cd Flask-Store/
   ```
 - Have a [python](https://www.python.org/downloads/) version of `3.x`
 - Create a virtual environment (Optional):
     ```
-      $ virtualenv venv # if you don't have `virtualenv` run `$ pip install virtualenv`
+      virtualenv venv # if you don't have `virtualenv` run `pip install virtualenv`
     ```
     Activate the virtual environment:
     ```
-    $ source venv/bin/activate` # your terminal prompt probably should include the name of the venv, if done correctly
+    source venv/bin/activate` # your terminal prompt probably should include the name of the venv, if done correctly
     ```
-    > You can exit the virtual environment anytime by `$ deactivate`
+    > You can exit the virtual environment anytime by `deactivate`
 
 - Install the requirements by [`pip`](https://pip.pypa.io/en/stable/installation):
   ```
-    $ pip install -r code/requirements.txt
+    pip install -r code/requirements.txt
   ```
 - Change directory to `/code`:
   ```
-    $ cd code/
+    cd code/
   ```
 - Run the app: `python3 app.py` (you might use a different python version so the running command might differ a bit. e.g `python app.py`)
 > If you get an error similar to this after running the app:
@@ -52,15 +52,15 @@ Only APIs with methods other than `GET` require these tokens.
 > This is fixable by using the patch files I wrote.
 > 1. Go to your project path:
 >   ```
->     $ cd /path/to/Flask-Store/
+>     cd /path/to/Flask-Store/
 >   ```
 > 2. Look at the patch files, I wrote them for my python version: 3.10. If you have a different python version, modify the file.
 > 3. Patch!
 >   ```
->     $ patch ../venv/lib/python3.10/site-packages/jwt/api_jwt.py < patches/api_jwt.patch
+>     patch ../venv/lib/python3.10/site-packages/jwt/api_jwt.py < patches/api_jwt.patch
 >   ```
 >   ```
->     $ patch ../venv/lib/python3.10/site-packages/jwt/api_jws.py < patches/api_jws.patch
+>     patch ../venv/lib/python3.10/site-packages/jwt/api_jws.py < patches/api_jws.patch
 >   ```
 > The app should work fine now. If any other error came along, I'd be happy to know!
 >
