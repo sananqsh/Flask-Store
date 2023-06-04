@@ -1,0 +1,11 @@
+--- ../venv/lib/python3.10/site-packages/jwt/api_jws.py	2023-06-04 14:48:13.301139264 +0330
++++ patches/api_jws.py	2023-06-04 16:04:28.653622943 +0330
+@@ -2,7 +2,7 @@
+ import json
+ import warnings
+ 
+-from collections import Mapping
++from collections.abc import Mapping
+ 
+ from .algorithms import Algorithm, get_default_algorithms  # NOQA
+ from .compat import binary_type, string_types, text_type
