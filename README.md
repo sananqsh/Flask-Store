@@ -5,6 +5,9 @@ Users can register and then log in. By logging in they will get a JWT (JSON Web 
 
 Only APIs with methods other than `GET` require these tokens.
 
+# Demo
+[![Watch on Youtube]([](https://img.youtube.com/vi/vt5fpE0bzSY/maxresdefault.jpg))](https://youtu.be/Ge1iNhwLefA)
+
 # Setup
 - Open your terminal
 - Clone the project by:
